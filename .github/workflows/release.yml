@@ -1,0 +1,40 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Get version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+      
+      - name: Create plugin directory structure
+        run: |
+          mkdir -p woocommerce-product-version
+          cp woocommerce-product-version.php woocommerce-product-version/
+          cp README.md woocommerce-product-version/
+      
+      - name: Create release zip
+        run: |
+          zip -r woocommerce-product-version-${{ steps.get_version.outputs.VERSION }}.zip woocommerce-product-version/
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: woocommerce-product-version-${{ steps.get_version.outputs.VERSION }}.zip
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
