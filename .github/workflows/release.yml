@@ -21,6 +21,7 @@ jobs:
       
       - name: Create plugin directory structure
         run: |
+          set -e
           mkdir -p woocommerce-product-version
           cp woocommerce-product-version.php woocommerce-product-version/
           cp README.md woocommerce-product-version/
@@ -30,7 +31,7 @@ jobs:
           zip -r woocommerce-product-version-${{ steps.get_version.outputs.VERSION }}.zip woocommerce-product-version/
       
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: woocommerce-product-version-${{ steps.get_version.outputs.VERSION }}.zip
           generate_release_notes: true
