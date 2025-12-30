@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WooCommerce Product Version
- * Plugin URI: https://github.com/yourusername/woocommerce-product-version
+ * Plugin URI: https://github.com/mfisher31/woocommerce-product-version
  * Description: Adds a version number field to WooCommerce products and exposes it via a REST API endpoint.
  * Version: 1.0.0
  * Requires at least: 5.8
